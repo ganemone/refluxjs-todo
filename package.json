@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "bower install",
+    "build": "browserify js/components.jsx -o build/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +15,23 @@
     "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-open": "^0.2.3",
-    "matchdep": "^0.3.0"
+    "matchdep": "^0.3.0",
+    "reactify": "^1.0.0"
+  },
+  "dependencies": {
+    "lodash": "^3.3.1",
+    "react": "^0.12.2",
+    "react-router": "^0.12.4",
+    "reflux": "^0.2.5"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
+    ]
   }
 }
