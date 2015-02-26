@@ -6,13 +6,13 @@ var DefaultRoute = Router.DefaultRoute;
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 var Reflux = require('reflux');
-var TodoActions = require('./actions');
-var todoListStore = require('./store');
+var TodoActions = require('../actions');
+var todoListStore = require('../store');
 
-var TodoItem = require('./components/TodoItem.jsx');
-var TodoList = require('./components/TodoList.jsx');
-var TodoHeader = require('./components/TodoHeader.jsx');
-var TodoFooter = require('./components/TodoFooter.jsx');
+var TodoItem = require('./TodoItem.jsx');
+var TodoList = require('./TodoList.jsx');
+var TodoHeader = require('./TodoHeader.jsx');
+var TodoFooter = require('./TodoFooter.jsx');
 
 
 var CompletedTodos = React.createClass({
