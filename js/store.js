@@ -6,17 +6,17 @@ var _ = require('lodash');
 var todoCounter = 0,
 localStorageKey = "todos";
 
-function getItemByKey(list,itemKey){
+function getItemByID(list, id){
     return _.find(list, function(item) {
-        return item.key === itemKey;
+        return item.id === id;
     });
 }
 
 var todoListStore = Reflux.createStore({
     // this will set up listeners to all publishers in TodoActions, using onKeyname (or keyname) as callbacks
     listenables: [TodoActions],
-    onEditItem: function(itemKey, newLabel) {
-        var foundItem = getItemByKey(this.list,itemKey);
+    onEditItem: function(id, newLabel) {
+        var foundItem = getItemByID(this.list,id);
         if (!foundItem) {
             return;
         }
@@ -25,19 +25,19 @@ var todoListStore = Reflux.createStore({
     },
     onAddItem: function(label) {
         this.updateList([{
-            key: todoCounter++,
+            id: todoCounter++,
             created: new Date(),
             isComplete: false,
             label: label
         }].concat(this.list));
     },
-    onRemoveItem: function(itemKey) {
+    onRemoveItem: function(id) {
         this.updateList(_.filter(this.list,function(item){
-            return item.key!==itemKey;
+            return item.id !== id;
         }));
     },
-    onToggleItem: function(itemKey) {
-        var foundItem = getItemByKey(this.list,itemKey);
+    onToggleItem: function(id) {
+        var foundItem = getItemByID(this.list, id);
         if (foundItem) {
             foundItem.isComplete = !foundItem.isComplete;
             this.updateList(this.list);
@@ -67,7 +67,7 @@ var todoListStore = Reflux.createStore({
         if (!loadedList) {
             // If no list is in localstorage, start out with a default one
             this.list = [{
-                key: todoCounter++,
+                id: todoCounter++,
                 created: new Date(),
                 isComplete: false,
                 label: 'Rule the web'
@@ -75,7 +75,7 @@ var todoListStore = Reflux.createStore({
         } else {
             this.list = _.map(JSON.parse(loadedList), function(item) {
                 // just resetting the key property for each todo item
-                item.key = todoCounter++;
+                item.id = todoCounter++;
                 return item;
             });
         }

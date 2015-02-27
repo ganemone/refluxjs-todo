@@ -1,6 +1,7 @@
 var React = require('react');
 var _ = require('lodash');
 var TodoItem = require('./TodoItem.jsx');
+var TodoActions = require('../actions');
 // Renders the todo list as well as the toggle all button
 // Used in TodoApp
 var TodoMain = React.createClass({
@@ -34,9 +35,10 @@ var TodoMain = React.createClass({
                         filteredList.map(function(item) {
                             return (
                                 <TodoItem
+                                    key={'todoitem-' + item.id}
+                                    id={item.id}
                                     label={item.label}
-                                    isComplete={item.isComplete}
-                                    key={item.key}/>
+                                    isComplete={item.isComplete} />
                             );
                         })
                     }

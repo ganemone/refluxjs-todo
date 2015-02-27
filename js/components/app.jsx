@@ -1,15 +1,10 @@
 /** @jsx React.DOM */
 var React = require('react/addons');
 var Router = require('react-router');
-var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
-var RouteHandler = Router.RouteHandler;
-var Link = Router.Link;
+var { Route, DefaultRoute, RouteHandler } = Router;
 var Reflux = require('reflux');
-var TodoActions = require('../actions');
 var todoListStore = require('../store');
 
-var TodoItem = require('./TodoItem.jsx');
 var TodoList = require('./TodoList.jsx');
 var TodoHeader = require('./TodoHeader.jsx');
 var TodoFooter = require('./TodoFooter.jsx');
@@ -17,19 +12,19 @@ var TodoFooter = require('./TodoFooter.jsx');
 
 var CompletedTodos = React.createClass({
     render: function() {
-        return <TodoList showing="completed" list={this.props.list} />
+        return (<TodoList showing="completed" list={this.props.list} />);
     }
 });
 
 var ActiveTodos = React.createClass({
     render: function() {
-        return <TodoList showing="active" list={this.props.list} />
+        return (<TodoList showing="active" list={this.props.list} />);
     }
 });
 
 var AllTodos = React.createClass({
     render: function() {
-        return <TodoList showing="all" list={this.props.list} />
+        return (<TodoList showing="all" list={this.props.list} />);
     }
 });
 
