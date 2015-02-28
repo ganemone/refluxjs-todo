@@ -4,6 +4,7 @@
   "description": "Todo example for the reflux project",
   "main": "index.js",
   "scripts": {
+    "watch": "watchify js/components/app.jsx -o build/bundle.js",
     "prepublish": "bower install",
     "build": "browserify js/components/app.jsx -o build/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +17,8 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-open": "^0.2.3",
     "matchdep": "^0.3.0",
-    "reactify": "^1.0.0"
+    "reactify": "^1.0.0",
+    "watchify": "^2.4.0"
   },
   "dependencies": {
     "lodash": "^3.3.1",
@@ -35,3 +37,4 @@
     ]
   }
 }
+

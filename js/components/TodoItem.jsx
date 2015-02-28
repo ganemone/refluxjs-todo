@@ -43,13 +43,15 @@ var TodoItem = React.createClass({
         var text = this.state.editValue; // because of the linkState call in render, this is the contents of the field
         // unless we're not editing (escape was pressed) or text is empty, save!
         if (this.state.isEditing && text) {
-            TodoActions.editItem(this.props.id, text);
+            TodoActions.update(this.props.id, {
+                'label': text
+            });
         }
         // whatever the outcome, if we left the field we're not editing anymore
         this.setState({isEditing:false});
     },
     handleDestroy: function() {
-        TodoActions.removeItem(this.props.id);
+        TodoActions.delete(this.props.id);
     },
     render: function() {
         var classes = React.addons.classSet({

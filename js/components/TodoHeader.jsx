@@ -1,5 +1,6 @@
 var React = require('react');
 var TodoActions = require('../actions');
+var TodoModel = require('../rest/todo').model;
 // Renders the headline and the form for creating new todos.
 // Used in TodoApp
 // Observe that the toogleall button is NOT rendered here, but in TodoList
@@ -8,7 +9,11 @@ var TodoHeader = React.createClass({
     handleValueChange: function(evt) {
         var text = evt.target.value;
         if (evt.which === 13 && text) { // hit enter, create new item if field isn't empty
-            TodoActions.addItem(text);
+            var todo = new TodoModel({
+                label: text,
+                created: new Date()
+            });
+            TodoActions.create(todo);
             evt.target.value = '';
         } else if (evt.which === 27) { // hit escape, clear without creating
             evt.target.value = '';

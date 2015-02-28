@@ -1,5 +1,6 @@
 var Reflux = require('reflux');
 var TodoActions = require('./actions');
+var TodoModel = require('./rest/todo').model;
 var _ = require('lodash');
 
 // some variables and helpers for our fake database stuff
@@ -12,10 +13,19 @@ function getItemByID(list, id){
     });
 }
 
-var todoListStore = Reflux.createStore({
+var TodoListStore = Reflux.createStore({
     // this will set up listeners to all publishers in TodoActions, using onKeyname (or keyname) as callbacks
     listenables: [TodoActions],
-    onEditItem: function(id, newLabel) {
+    onLoad: function() {
+        console.log('On Load: ', arguments);
+    },
+    onLoadCompleted: function() {
+        console.log('On Load Completed: ', arguments);
+    },
+    onLoadFailed: function() {
+        console.log('On Load Failed: ', arguments);
+    },
+    onPut: function(id, newLabel) {
         var foundItem = getItemByID(this.list,id);
         if (!foundItem) {
             return;
@@ -23,15 +33,22 @@ var todoListStore = Reflux.createStore({
         foundItem.label = newLabel;
         this.updateList(this.list);
     },
-    onAddItem: function(label) {
-        this.updateList([{
+    onCreateFailed: function(model) {
+        console.log('Failed: ', model);
+    },
+    onCreateCompleted: function(model) {
+        console.log('Completed: ', model);
+    },
+    onCreate: function(label) {
+        console.log('On Create');
+        this.updateList([new TodoModel({
             id: todoCounter++,
             created: new Date(),
             isComplete: false,
             label: label
-        }].concat(this.list));
+        })].concat(this.list));
     },
-    onRemoveItem: function(id) {
+    onDelete: function(id) {
         this.updateList(_.filter(this.list,function(item){
             return item.id !== id;
         }));
@@ -66,12 +83,12 @@ var todoListStore = Reflux.createStore({
         var loadedList = localStorage.getItem(localStorageKey);
         if (!loadedList) {
             // If no list is in localstorage, start out with a default one
-            this.list = [{
+            this.list = [new TodoModel({
                 id: todoCounter++,
                 created: new Date(),
                 isComplete: false,
                 label: 'Rule the web'
-            }];
+            })];
         } else {
             this.list = _.map(JSON.parse(loadedList), function(item) {
                 // just resetting the key property for each todo item
@@ -83,4 +100,4 @@ var todoListStore = Reflux.createStore({
     }
 });
 
-module.exports = todoListStore;
+module.exports = TodoListStore;
