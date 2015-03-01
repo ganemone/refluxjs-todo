@@ -17,7 +17,18 @@ var resource = {
     'patch': true,
     'delete': true,
     'update': 'patch'
-  }
+  },
+  otherActions: [{
+    name: 'toggleItem',
+    endpoint: 'item/toggle',
+    method: 'patch'
+  }, {
+    name: 'toggleAll',
+    method: 'post'
+  }, {
+    name: 'clearCompleted',
+    method: 'patch'
+  }]
 };
 
 var { model, actions } = createAPI(resource);

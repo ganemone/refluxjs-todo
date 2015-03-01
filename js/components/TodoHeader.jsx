@@ -11,6 +11,7 @@ var TodoHeader = React.createClass({
         if (evt.which === 13 && text) { // hit enter, create new item if field isn't empty
             var todo = new TodoModel({
                 label: text,
+                isCompleted: false,
                 created: new Date()
             });
             TodoActions.create(todo);

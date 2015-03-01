@@ -4,8 +4,6 @@ var TodoModel = require('./rest/todo').model;
 var _ = require('lodash');
 
 // some variables and helpers for our fake database stuff
-var todoCounter = 0,
-localStorageKey = "todos";
 
 function getItemByID(list, id){
     return _.find(list, function(item) {
@@ -34,19 +32,13 @@ var TodoListStore = Reflux.createStore({
         this.updateList(this.list);
     },
     onCreateFailed: function(model) {
-        console.log('Failed: ', model);
+        console.log('Failed: ', arguments);
     },
     onCreateCompleted: function(model) {
-        console.log('Completed: ', model);
+        console.log('Completed: ', arguments);
     },
     onCreate: function(label) {
-        console.log('On Create');
-        this.updateList([new TodoModel({
-            id: todoCounter++,
-            created: new Date(),
-            isComplete: false,
-            label: label
-        })].concat(this.list));
+        console.log('On Create', arguments);
     },
     onDelete: function(id) {
         this.updateList(_.filter(this.list,function(item){
@@ -71,32 +63,15 @@ var TodoListStore = Reflux.createStore({
             return !item.isComplete;
         }));
     },
-    // called whenever we change a list. normally this would mean a database API call
+    // called whenever we change a list
     updateList: function(list){
-        localStorage.setItem(localStorageKey, JSON.stringify(list));
         // if we used a real database, we would likely do the below in a callback
         this.list = list;
         this.trigger(list); // sends the updated list to all listening components (TodoApp)
     },
     // this will be called by all listening components as they register their listeners
     getInitialState: function() {
-        var loadedList = localStorage.getItem(localStorageKey);
-        if (!loadedList) {
-            // If no list is in localstorage, start out with a default one
-            this.list = [new TodoModel({
-                id: todoCounter++,
-                created: new Date(),
-                isComplete: false,
-                label: 'Rule the web'
-            })];
-        } else {
-            this.list = _.map(JSON.parse(loadedList), function(item) {
-                // just resetting the key property for each todo item
-                item.id = todoCounter++;
-                return item;
-            });
-        }
-        return this.list;
+        return [];
     }
 });
 

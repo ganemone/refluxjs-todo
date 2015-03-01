@@ -4,17 +4,15 @@ var TodoActions = require('./rest/todo').actions;
 // The store is listening to all actions, and the components in turn are listening to the store.
 // Thus the flow is: User interaction -> component calls action -> store reacts and triggers -> components update
 
-console.log('Actions: ', TodoActions);
-
 var otherActions = Reflux.createActions([
-    "toggleItem",     // called by button in TodoItem
-    "toggleAllItems", // called by button in TodoMain (even though you'd think TodoHeader)
-    "clearCompleted", // called by button in TodoFooter
+  "someOtherAction",     // called by button in TodoItem
 ]);
 
 // TODO: Add Actions
 for (var attrname in otherActions) {
   TodoActions[attrname] = otherActions[attrname];
 }
+
+console.log('Actions: ', TodoActions);
 
 module.exports = TodoActions;
