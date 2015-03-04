@@ -1,6 +1,5 @@
 var Reflux = require('reflux');
 var TodoActions = require('./actions');
-var TodoModel = require('./rest/todo').model;
 var _ = require('lodash');
 
 // some variables and helpers for our fake database stuff
